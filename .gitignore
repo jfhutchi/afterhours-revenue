@@ -1,6 +1,9 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ---------------------------------------------------------------
+# AfterHours Revenue — .gitignore
+# See https://help.github.com/articles/ignoring-files/
+# ---------------------------------------------------------------
 
-# dependencies
+# Dependencies
 /node_modules
 /.pnp
 .pnp.*
@@ -10,32 +13,57 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
-
-# next.js
+# Next.js build output
 /.next/
 /out/
-
-# production
 /build
+/dist
 
-# misc
-.DS_Store
-*.pem
+# Caches
+.turbo
+.swc/
+.eslintcache
+*.tsbuildinfo
+next-env.d.ts
 
-# debug
+# Testing
+/coverage
+
+# Local data store (audit-form lead capture — see src/app/api/audit)
+/data/leads.local.json
+
+# Environment variables — never commit secrets (.env.example is allowed)
+.env*
+!.env.example
+
+# Logs & debug
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
+# Deployment
 .vercel
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# Editor / IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+*~
+
+# Claude Code (keep shared launch config; ignore local-only settings)
+.claude/settings.local.json
+
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.pem

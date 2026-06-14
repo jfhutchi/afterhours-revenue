@@ -1,26 +1,146 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   AfterHours Revenue — design tokens (from design/README.md)
+   ============================================================ */
+@theme {
+  /* surfaces */
+  --color-paper: #f4f2ec;
+  --color-card: #ffffff;
+  --color-surface: #f7f5f0;
+  --color-surface-2: #ede8de;
+
+  /* ink / text */
+  --color-ink: #0e1c2b;
+  --color-navy-700: #122738;
+  --color-navy-600: #15324a;
+  --color-body: #44525e;
+  --color-muted: #6b7a88;
+  --color-faint: #8a97a3;
+  --color-slate-soft: #5a6b7b;
+
+  /* emerald — recovered money / action */
+  --color-emerald: #0e9f6e;
+  --color-emerald-deep: #0a7d57;
+  --color-emerald-text: #0a6e4e;
+  --color-emerald-tint: #e7f5ef;
+  --color-mint: #bfe9d6;
+
+  /* amber — after-hours / urgency-secondary */
+  --color-amber: #d98a3d;
+  --color-amber-tint: #fbf1e3;
+  --color-amber-tint-2: #fbf6ee;
+
+  /* red — loss / critical */
+  --color-danger: #c9474e;
+  --color-danger-tint: #fbe9e9;
+
+  /* borders */
+  --color-line: #e9e5dc;
+  --color-line-2: #ece7dd;
+  --color-line-3: #e4dfd4;
+
+  /* fonts (vars set by next/font in layout.tsx) */
+  --font-display: var(--font-oswald), "Oswald", "Arial Narrow", sans-serif;
+  --font-sans: var(--font-hanken), "Hanken Grotesk", sans-serif;
+  --font-mono: var(--font-plex-mono), "IBM Plex Mono", monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ---- Industrial: uppercase, condensed headlines ----
+   The [class] selector outranks the tight negative tracking utilities the
+   components set, which read as cramped on uppercase condensed Oswald. */
+h1[class],
+h2[class] {
+  text-transform: uppercase;
+  letter-spacing: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* base */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-emerald);
+  color: #fff;
+}
+
+/* animations (ported from prototype) */
+@keyframes ahPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+@keyframes ahRise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.animate-ah-pulse { animation: ahPulse 2s infinite; }
+.animate-ah-rise { animation: ahRise 0.6s ease both; }
+
+/* range sliders (ROI calculator) */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-line-3);
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-emerald);
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(14, 159, 110, 0.45);
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-emerald);
+  border: 3px solid #fff;
+  cursor: pointer;
+}
+
+/* utility: hide scrollbar for horizontally-scrolling app nav on small screens */
+.scrollbar-none { scrollbar-width: none; }
+.scrollbar-none::-webkit-scrollbar { display: none; }
+
+/* industrial: faint blueprint grid for dark sections */
+.blueprint-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* industrial: hairline corner ticks on key panels (blueprint registration marks) */
+.spec-frame {
+  position: relative;
+}
+.spec-frame::before,
+.spec-frame::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--color-emerald);
+  border-style: solid;
+}
+.spec-frame::before {
+  top: 8px;
+  left: 8px;
+  border-width: 1px 0 0 1px;
+}
+.spec-frame::after {
+  bottom: 8px;
+  right: 8px;
+  border-width: 0 1px 1px 0;
 }

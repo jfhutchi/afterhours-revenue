@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  ::selection { background: #0E9F6E; color: #fff; }
+  @keyframes ahPulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+  @keyframes ahRise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  input[type=range] { -webkit-appearance: none; appearance: none; height: 6px; border-radius: 999px; background: #E4DFD4; outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #0E9F6E; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(14,159,110,.45); cursor: pointer; }
+  input[type=range]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: #0E9F6E; border: 3px solid #fff; cursor: pointer; }
+</style>
+</helmet>
+
+<div style="font-family: 'Hanken Grotesk', sans-serif; background: #F4F2EC; color: #0E1C2B; min-height: 100vh; -webkit-font-smoothing: antialiased;">
+
+  <!-- ===== GLOBAL TOP BAR / PROTOTYPE NAVIGATOR ===== -->
+  <div style="position: sticky; top: 0; z-index: 50; background: rgba(244,242,236,.86); backdrop-filter: blur(12px); border-bottom: 1px solid #E4DFD4;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; gap: 20px;">
+      <div onClick="{{ goHome }}" style="display: flex; align-items: center; gap: 11px; cursor: pointer; flex-shrink: 0;">
+        <div style="width: 30px; height: 30px; border-radius: 9px; background: conic-gradient(from 220deg, #0E1C2B 0deg 180deg, #0E9F6E 180deg 360deg); box-shadow: 0 2px 6px rgba(14,28,43,.25);"></div>
+        <div style="font-family: 'Schibsted Grotesk', sans-serif; font-weight: 800; font-size: 17px; letter-spacing: -.02em;">AfterHours<span style="color: #0E9F6E;">&nbsp;Revenue</span></div>
+      </div>
+      <div style="display: flex; gap: 4px; margin-left: 8px; overflow-x: auto; flex: 1;">
+        <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="6">
+          <button onClick="{{ tab.onClick }}" style="{{ tab.style }}">{{ tab.label }}</button>
+        </sc-for>
+      </div>
+      <button onClick="{{ goAudit }}" style="flex-shrink: 0; background: #0E1C2B; color: #fff; border: none; border-radius: 10px; padding: 10px 16px; font-family: 'Hanken Grotesk',sans-serif; font-weight: 600; font-size: 13.5px; cursor: pointer; white-space: nowrap;">Free Revenue Audit</button>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- ====================== LANDING PAGE ========================== -->
+  <!-- ============================================================= -->
+  <sc-if value="{{ showLanding }}" hint-placeholder-val="{{ true }}">
+  <div>
+
+    <!-- HERO -->
+    <section style="position: relative; overflow: hidden; background: linear-gradient(180deg, #0E1C2B 0%, #122738 100%); color: #fff;">
+      <div style="position: absolute; top: -120px; right: -80px; width: 460px; height: 460px; border-radius: 50%; background: radial-gradient(circle, rgba(14,159,110,.22), transparent 70%);"></div>
+      <div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px 84px; display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; position: relative;">
+        <div>
+          <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); border-radius: 999px; padding: 6px 13px; font-family: 'IBM Plex Mono',monospace; font-size: 11.5px; letter-spacing: .04em; color: #BFE9D6; margin-bottom: 22px;">
+            <span style="width: 7px; height: 7px; border-radius: 50%; background: #0E9F6E; animation: ahPulse 2s infinite;"></span>AFTER-HOURS REVENUE RECOVERY
+          </div>
+          <h1 style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 54px; line-height: 1.04; letter-spacing: -.03em; margin: 0 0 20px;">Recover the customers you're losing when no one answers.</h1>
+          <p style="font-size: 18.5px; line-height: 1.55; color: #B6C4D0; margin: 0 0 30px; max-width: 520px;">We answer missed calls, text customers back instantly, book the appointment, and show you exactly how much revenue your follow-up recovered — every week.</p>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 22px;">
+            <button onClick="{{ goAudit }}" style="background: #0E9F6E; color: #fff; border: none; border-radius: 12px; padding: 15px 24px; font-family: 'Hanken Grotesk',sans-serif; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 8px 24px -8px rgba(14,159,110,.6);">Get a Free Missed Revenue Audit</button>
+            <button onClick="{{ goDashboard }}" style="background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.18); border-radius: 12px; padding: 15px 24px; font-family: 'Hanken Grotesk',sans-serif; font-weight: 600; font-size: 16px; cursor: pointer;">See How It Works →</button>
+          </div>
+          <div style="font-family: 'IBM Plex Mono',monospace; font-size: 12px; color: #7E93A3; letter-spacing: .02em;">No contracts · Installed for you · If one customer pays for it, the math is simple.</div>
+        </div>
+
+        <!-- Hero dashboard card -->
+        <div style="background: #fff; border-radius: 22px; padding: 24px; box-shadow: 0 40px 80px -30px rgba(0,0,0,.55); color: #0E1C2B; animation: ahRise .6s ease both;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+            <div>
+              <div style="font-family: 'IBM Plex Mono',monospace; font-size: 10.5px; letter-spacing: .08em; color: #8A97A3;">THIS WEEK · HUDSON VALLEY HVAC</div>
+              <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 17px; margin-top: 3px;">Revenue Recovery</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px; background: #E7F5EF; color: #0A6E4E; border-radius: 999px; padding: 5px 11px; font-size: 12px; font-weight: 700;"><span style="width: 6px; height: 6px; border-radius: 50%; background: #0E9F6E;"></span>Live</div>
+          </div>
+          <div style="background: linear-gradient(135deg, #0E9F6E, #0A7D57); border-radius: 16px; padding: 20px; color: #fff; margin-bottom: 14px;">
+            <div style="font-family: 'IBM Plex Mono',monospace; font-size: 11px; letter-spacing: .06em; opacity: .85;">ESTIMATED REVENUE RECOVERED</div>
+            <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 42px; letter-spacing: -.02em; margin-top: 4px;">$6,850</div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div style="background: #F7F5F0; border: 1px solid #ECE7DD; border-radius: 13px; padding: 13px;"><div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 24px;">42</div><div style="font-size: 12px; color: #6B7A88;">Calls answered</div></div>
+            <div style="background: #F7F5F0; border: 1px solid #ECE7DD; border-radius: 13px; padding: 13px;"><div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 24px; color: #0A7D57;">17</div><div style="font-size: 12px; color: #6B7A88;">Missed calls recovered</div></div>
+            <div style="background: #F7F5F0; border: 1px solid #ECE7DD; border-radius: 13px; padding: 13px;"><div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 24px;">9</div><div style="font-size: 12px; color: #6B7A88;">Appointments booked</div></div>
+            <div style="background: #F7F5F0; border: 1px solid #ECE7DD; border-radius: 13px; padding: 13px;"><div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 24px;">87%</div><div style="font-size: 12px; color: #6B7A88;">Recovery score</div></div>
+          </div>
+          <!-- text-back conversation -->
+          <div style="margin-top: 14px; border-top: 1px dashed #E4DFD4; padding-top: 14px;">
+            <div style="font-family: 'IBM Plex Mono',monospace; font-size: 10px; letter-spacing: .07em; color: #8A97A3; margin-bottom: 9px;">10:42 PM · MISSED CALL → INSTANT TEXT-BACK</div>
+            <div style="display: flex; flex-direction: column; gap: 7px;">
+              <div style="align-self: flex-start; background: #0E1C2B; color: #fff; border-radius: 14px 14px 14px 4px; padding: 9px 13px; font-size: 13px; max-width: 86%;">Hi, this is Hudson Valley HVAC — sorry we missed you! Is this about a heating or cooling issue? We can get you on the schedule tonight.</div>
+              <div style="align-self: flex-end; background: #E7F5EF; color: #0A6E4E; border-radius: 14px 14px 4px 14px; padding: 9px 13px; font-size: 13px; max-width: 86%; font-weight: 600;">Yes! My AC stopped cooling. Earliest you have?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section style="padding: 88px 0; background: #F4F2EC;">
+      <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+        <div style="max-width: 720px; margin-bottom: 44px;">
+          <div style="font-family: 'IBM Plex Mono',monospace; font-size: 12px; letter-spacing: .08em; color: #C9474E; margin-bottom: 12px;">THE LEAK</div>
+          <h2 style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 40px; line-height: 1.08; letter-spacing: -.025em; margin: 0 0 14px;">Voicemail is where local leads go to die.</h2>
+          <p style="font-size: 18px; line-height: 1.55; color: #5A6B7B; margin: 0;">You don't lose customers because your service is bad. You lose them because no one answered fast enough — and you never even saw the lead.</p>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div style="background: #fff; border: 1px solid #F0DADB; border-radius: 18px; padding: 28px;">
+            <div style="display: inline-block; font-family: 'IBM Plex Mono',monospace; font-size: 11px; letter-spacing: .06em; color: #C9474E; background: #FBE9E9; border-radius: 999px; padding: 5px 12px; margin-bottom: 18px;">WITHOUT A SYSTEM</div>
+            <sc-for list="{{ withoutSteps }}" as="s" hint-placeholder-count="5">
+              <div style="display: flex; gap: 13px; padding: 11px 0; border-bottom: 1px solid #F4F2EC;">
+                <span style="color: #C9474E; font-weight: 700; flex-shrink: 0;">✕</span><span style="font-size: 15.5px; color: #44525E;">{{ s }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="background: #0E1C2B; border-radius: 18px; padding: 28px; color: #fff;">
+            <div style="display: inline-block; font-family: 'IBM Plex Mono',monospace; font-size: 11px; letter-spacing: .06em; color: #BFE9D6; background: rgba(14,159,110,.18); border-radius: 999px; padding: 5px 12px; margin-bottom: 18px;">WITH AFTERHOURS REVENUE</div>
+            <sc-for list="{{ withSteps }}" as="s" hint-placeholder-count="5">
+              <div style="display: flex; gap: 13px; padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,.08);">
+                <span style="color: #0E9F6E; font-weight: 700; flex-shrink: 0;">✓</span><span style="font-size: 15.5px; color: #CBD6DF;">{{ s }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROI CALCULATOR -->
+    <section style="padding: 88px 0; background: #0E1C2B; color: #fff;">
+      <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+        <div>
+          <div style="font-family: 'IBM Plex Mono',monospace; font-size: 12px; letter-spacing: .08em; color: #BFE9D6; margin-bottom: 12px;">THE MATH</div>
+          <h2 style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 40px; line-height: 1.08; letter-spacing: -.025em; margin: 0 0 16px;">If one customer pays for it, the math is simple.</h2>
+          <p style="font-size: 18px; line-height: 1.55; color: #A9B8C4; margin: 0 0 24px;">Move the sliders to your own numbers. Most owners only need to recover one or two real jobs a month to come out ahead.</p>
+          <div style="display: flex; flex-direction: column; gap: 22px; max-width: 420px;">
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 9px;"><span style="color: #A9B8C4;">Average customer value</span><span style="font-family: 'IBM Plex Mono',monospace; font-weight: 600;">{{ avgFmt }}</span></div>
+              <input type="range" min="100" max="2000" step="25" value="{{ avg }}" onInput="{{ onAvg }}" style="width: 100%;">
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 9px;"><span style="color: #A9B8C4;">Recovered appointments / month</span><span style="font-family: 'IBM Plex Mono',monospace; font-weight: 600;">{{ recovered }}</span></div>
+              <input type="range" min="1" max="30" step="1" value="{{ recovered }}" onInput="{{ onRec }}" style="width: 100%;">
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 9px;"><span style="color: #A9B8C4;">Monthly system cost</span><span style="font-family: 'IBM Plex Mono',monospace; font-weight: 600;">{{ costFmt }}</span></div>
+              <input type="range" min="199" max="999" step="50" value="{{ cost }}" onInput="{{ onCost }}" style="width: 100%;">
+            </div>
+          </div>
+        </div>
+        <div style="background: #fff; color: #0E1C2B; border-radius: 22px; padding: 32px; box-shadow: 0 40px 80px -30px rgba(0,0,0,.5);">
+          <div style="display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #EEE9DF;"><span style="color: #6B7A88;">Recovered revenue / month</span><span style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 19px;">{{ recoveredRevFmt }}</span></div>
+          <div style="display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #EEE9DF;"><span style="color: #6B7A88;">Less monthly cost</span><span style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 19px; color: #C9474E;">−{{ costFmt }}</span></div>
+          <div style="margin-top: 18px; background: linear-gradient(135deg, #0E9F6E, #0A7D57); border-radius: 16px; padding: 22px; color: #fff;">
+            <div style="font-family: 'IBM Plex Mono',monospace; font-size: 11px; letter-spacing: .06em; opacity: .85;">NET ESTIMATED GAIN / MONTH</div>
+            <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 46px; letter-spacing: -.02em; margin-top: 4px;">{{ netFmt }}</div>
+          </div>
+          <div style="font-size: 12px; color: #8A97A3; margin-top: 14px; line-height: 1.5;">Estimate only, based on your average customer value and recovered booked opportunities. Not a guarantee of revenue.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section style="padding: 88px 0; background: #F4F2EC;">
+      <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+        <div style="text-align: center; max-width: 640px; margin: 0 auto 48px;">
+          <div style="font-family: 'IBM Plex Mono',monospace; font-size: 12px; letter-spacing: .08em; color: #0A7D57; margin-bottom: 12px;">DONE FOR YOU</div>
+          <h2 style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 40px; line-height: 1.08; letter-spacing: -.025em; margin: 0;">We install it. You get booked appointments.</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;">
+          <sc-for list="{{ howSteps }}" as="h" hint-placeholder-count="4">
+            <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 18px; padding: 24px;">
+              <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 15px; color: #fff; background: #0E9F6E; width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">{{ h.n }}</div>
+              <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 7px;">{{ h.title }}</div>
+              <div style="font-size: 14.5px; color: #6B7A88; line-height: 1.5;">{{ h.desc }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section style="padding: 88px 0; background: #fff;">
+      <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+        <div style="max-width: 640px; margin-bottom: 44px;">
+          <div style="font-family: 'IBM Plex Mono',monospace; font-size: 12px; letter-spacing: .08em; color: #0A7D57; margin-bottom: 12px;">WHAT'S INSIDE</div>
+          <h2 style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 40px; line-height: 1.08; letter-spacing: -.025em; margin: 0;">Everything needed to catch the lead and book the job.</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+          <sc-for list="{{ features }}" as="f" hint-placeholder-count="11">
+            <div style="display: flex; gap: 13px; padding: 18px; background: #F7F5F0; border: 1px solid #ECE7DD; border-radius: 14px;">
+              <span style="flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #E7F5EF; color: #0A7D57; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center;">✓</span>
+              <div><div style="font-weight: 700; font-size: 15.5px; margin-bottom: 3px;">{{ f.title }}</div><div style="font-size: 13.5px; color: #6B7A88; line-height: 1.45;">{{ f.desc }}</div></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- INDUSTRIES -->
+    <section style="padding: 88px 0; background: #F4F2EC;">
+      <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+        <div style="max-width: 640px; margin-bottom: 44px;">
+          <div style="font-family: 'IBM Plex Mono',monospace; font-size: 12px; letter-spacing: .08em; color: #D98A3D; margin-bottom: 12px;">WHO IT'S FOR</div>
+          <h2 style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 40px; line-height: 1.08; letter-spacing: -.025em; margin: 0;">A missed call costs the most where one job is worth the most.</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+          <sc-for list="{{ industries }}" as="ind" hint-placeholder-count="6">
+            <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 18px; padding: 24px;">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px;">
+                <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 18px;">{{ ind.name }}</div>
+                <div style="font-family: 'IBM Plex Mono',monospace; font-size: 12px; color: #0A7D57; font-weight: 600;">{{ ind.value }}</div>
+              </div>
+              <div style="font-size: 14.5px; color: #6B7A88; line-height: 1.5;">{{ ind.why }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" style="padding: 88px 0; background: #fff;">
+      <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+        <div style="text-align: center; max-width: 640px; margin: 0 auto 48px;">
+          <div style="font-family: 'IBM Plex Mono',monospace; font-size: 12px; letter-spacing: .08em; color: #0A7D57; margin-bottom: 12px;">EXAMPLE PACKAGES</div>
+          <h2 style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 40px; line-height: 1.08; letter-spacing: -.025em; margin: 0 0 12px;">Priced so one recovered customer covers it.</h2>
+          <p style="font-size: 16px; color: #6B7A88; margin: 0;">Draft pricing shown as example packages. One-time setup: $500–$1,500 depending on integrations.</p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: start;">
+          <sc-for list="{{ tiers }}" as="t" hint-placeholder-count="3">
+            <div style="{{ t.cardStyle }}">
+              <sc-if value="{{ t.popular }}" hint-placeholder-val="{{ true }}"><div style="display: inline-block; font-family: 'IBM Plex Mono',monospace; font-size: 11px; letter-spacing: .06em; background: #0E9F6E; color: #fff; border-radius: 999px; padding: 5px 12px; margin-bottom: 14px;">MOST POPULAR</div></sc-if>
+              <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 20px;">{{ t.name }}</div>
+              <div style="margin: 12px 0 4px;"><span style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 40px; letter-spacing: -.02em;">{{ t.price }}</span><span style="color: #8A97A3; font-size: 15px;">/mo</span></div>
+              <div style="font-size: 13.5px; color: #6B7A88; margin-bottom: 20px;">{{ t.tagline }}</div>
+              <button style="{{ t.btnStyle }}">Choose {{ t.name }}</button>
+              <div style="margin-top: 22px; display: flex; flex-direction: column; gap: 11px;">
+                <sc-for list="{{ t.features }}" as="ft" hint-placeholder-count="5">
+                  <div style="display: flex; gap: 10px; font-size: 14.5px;"><span style="color: #0E9F6E; font-weight: 700;">✓</span><span style="{{ t.featColor }}">{{ ft }}</span></div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- AUDIT CTA -->
+    <section style="padding: 88px 0; background: #F4F2EC;">
+      <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+        <div style="background: linear-gradient(135deg, #0E1C2B, #15324A); border-radius: 26px; padding: 52px; color: #fff; display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; position: relative; overflow: hidden;">
+          <div style="position: absolute; bottom: -100px; left: -60px; width: 360px; height: 360px; border-radius: 50%; background: radial-gradient(circle, rgba(217,138,61,.2), transparent 70%);"></div>
+          <div style="position: relative;">
+            <div style="font-family: 'IBM Plex Mono',monospace; font-size: 12px; letter-spacing: .08em; color: #F0C79B; margin-bottom: 14px;">THE WEDGE · FREE</div>
+            <h2 style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 38px; line-height: 1.08; letter-spacing: -.025em; margin: 0 0 14px;">Get a Free Missed Revenue Audit.</h2>
+            <p style="font-size: 17px; line-height: 1.55; color: #B6C4D0; margin: 0 0 24px;">We call your business after hours and test exactly what a real customer would hit — then show you where the money is leaking.</p>
+            <div style="display: flex; flex-direction: column; gap: 11px;">
+              <sc-for list="{{ auditPromise }}" as="a" hint-placeholder-count="5">
+                <div style="display: flex; gap: 11px; font-size: 15px;"><span style="color: #0E9F6E; font-weight: 700;">✓</span><span style="color: #CBD6DF;">{{ a }}</span></div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="position: relative; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); border-radius: 18px; padding: 26px;">
+            <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 18px; margin-bottom: 16px;">Request your audit</div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <input placeholder="Business name" style="background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); border-radius: 11px; padding: 13px 14px; color: #fff; font-family: 'Hanken Grotesk',sans-serif; font-size: 15px;">
+              <input placeholder="Business phone number" style="background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); border-radius: 11px; padding: 13px 14px; color: #fff; font-family: 'Hanken Grotesk',sans-serif; font-size: 15px;">
+              <input placeholder="Industry (e.g. HVAC, plumbing)" style="background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); border-radius: 11px; padding: 13px 14px; color: #fff; font-family: 'Hanken Grotesk',sans-serif; font-size: 15px;">
+              <button onClick="{{ goAudit }}" style="background: #0E9F6E; color: #fff; border: none; border-radius: 11px; padding: 15px; font-family: 'Hanken Grotesk',sans-serif; font-weight: 700; font-size: 16px; cursor: pointer; margin-top: 4px;">See a sample audit report →</button>
+            </div>
+            <div style="font-size: 12px; color: #7E93A3; margin-top: 12px; text-align: center;">Takes 24 hours · No obligation</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST + MOBILE -->
+    <section style="padding: 88px 0 96px; background: #fff;">
+      <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center;">
+        <div>
+          <div style="font-family: 'IBM Plex Mono',monospace; font-size: 12px; letter-spacing: .08em; color: #0A7D57; margin-bottom: 12px;">NO BLACK BOX</div>
+          <h2 style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 38px; line-height: 1.08; letter-spacing: -.025em; margin: 0 0 24px;">You stay in control. Always.</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <sc-for list="{{ trust }}" as="tr" hint-placeholder-count="6">
+              <div style="display: flex; gap: 11px; padding: 14px; background: #F7F5F0; border: 1px solid #ECE7DD; border-radius: 13px;"><span style="color: #0E9F6E; font-weight: 700;">✓</span><span style="font-size: 14.5px; color: #44525E;">{{ tr }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+        <!-- phone -->
+        <div style="display: flex; justify-content: center;">
+          <div style="width: 290px; background: #0E1C2B; border-radius: 40px; padding: 12px; box-shadow: 0 40px 80px -30px rgba(0,0,0,.5);">
+            <div style="background: #F4F2EC; border-radius: 30px; overflow: hidden;">
+              <div style="background: #0E1C2B; color: #fff; padding: 16px 18px 14px;">
+                <div style="font-family: 'IBM Plex Mono',monospace; font-size: 9px; letter-spacing: .08em; opacity: .7;">HUDSON VALLEY HVAC · MON</div>
+                <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 28px; margin-top: 8px;">$8,750</div>
+                <div style="font-size: 12px; color: #BFE9D6;">recovered this week</div>
+              </div>
+              <div style="padding: 14px; display: flex; flex-direction: column; gap: 9px;">
+                <div style="background: #FBE9E9; border: 1px solid #F0DADB; border-radius: 12px; padding: 12px;"><div style="font-family: 'IBM Plex Mono',monospace; font-size: 9px; color: #C9474E; letter-spacing: .06em;">⚠ URGENT · ESCALATED</div><div style="font-weight: 700; font-size: 14px; margin-top: 3px;">Diane P. — Water leak</div><div style="font-size: 12px; color: #6B7A88;">$1,200 · 10:31 PM</div></div>
+                <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 12px; padding: 12px;"><div style="font-family: 'IBM Plex Mono',monospace; font-size: 9px; color: #0A7D57; letter-spacing: .06em;">✓ BOOKED</div><div style="font-weight: 700; font-size: 14px; margin-top: 3px;">Sarah M. — AC not cooling</div><div style="font-size: 12px; color: #6B7A88;">$450 · Tue 10:00 AM</div></div>
+                <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 12px; padding: 12px;"><div style="font-family: 'IBM Plex Mono',monospace; font-size: 9px; color: #D98A3D; letter-spacing: .06em;">↻ FOLLOW-UP SENT</div><div style="font-weight: 700; font-size: 14px; margin-top: 3px;">Mike R. — Furnace issue</div><div style="font-size: 12px; color: #6B7A88;">$300 · 6:17 AM</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="background: #0E1C2B; color: #fff; padding: 44px 0;">
+      <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div style="display: flex; align-items: center; gap: 11px;">
+          <div style="width: 26px; height: 26px; border-radius: 8px; background: conic-gradient(from 220deg, #fff 0deg 180deg, #0E9F6E 180deg 360deg);"></div>
+          <span style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800;">AfterHours Revenue</span>
+        </div>
+        <div style="font-size: 13px; color: #7E93A3;">Your business should never lose a customer to voicemail.</div>
+      </div>
+    </footer>
+
+  </div>
+  </sc-if>
+
+  <!-- ============================================================= -->
+  <!-- ======================== DASHBOARD ========================== -->
+  <!-- ============================================================= -->
+  <sc-if value="{{ showDashboard }}" hint-placeholder-val="{{ true }}">
+  <div style="max-width: 1240px; margin: 0 auto; padding: 32px 24px 64px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 26px; flex-wrap: wrap; gap: 14px;">
+      <div style="flex: 1; min-width: 280px;">
+        <div style="font-family: 'IBM Plex Mono',monospace; font-size: 12px; letter-spacing: .07em; color: #8A97A3;">DASHBOARD · HUDSON VALLEY HVAC CO.</div>
+        <h1 style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 32px; letter-spacing: -.02em; margin: 6px 0 4px;">What did we recover this week?</h1>
+        <div style="font-size: 14.5px; color: #6B7A88;">Mon Jun 9 – Sun Jun 15 · Compared to last week</div>
+      </div>
+      <button onClick="{{ goReport }}" style="background: #0E1C2B; color: #fff; border: none; border-radius: 11px; padding: 12px 18px; font-weight: 600; font-size: 14px; cursor: pointer;">View weekly report →</button>
+    </div>
+
+    <!-- hero metric + score -->
+    <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 18px; margin-bottom: 18px;">
+      <div style="background: linear-gradient(135deg, #0E9F6E, #0A7D57); border-radius: 20px; padding: 30px; color: #fff; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div style="font-family: 'IBM Plex Mono',monospace; font-size: 11.5px; letter-spacing: .06em; opacity: .85;">ESTIMATED REVENUE RECOVERED</div>
+          <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 58px; letter-spacing: -.02em; margin: 6px 0;">$8,750</div>
+          <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,.16); border-radius: 999px; padding: 5px 12px; font-size: 13px; font-weight: 600;">↑ 22% vs last week</div>
+        </div>
+        <div style="font-size: 12.5px; color: rgba(255,255,255,.8); margin-top: 20px; line-height: 1.5;">Based on 11 booked opportunities × your average job value of $795. Estimate only — not a guarantee.</div>
+      </div>
+      <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+        <div style="width: 150px; height: 150px; border-radius: 50%; background: conic-gradient(#0E9F6E 0% 87%, #EDE8DE 87% 100%); display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+          <div style="width: 116px; height: 116px; border-radius: 50%; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 38px; letter-spacing: -.02em;">87%</div>
+            <div style="font-family: 'IBM Plex Mono',monospace; font-size: 9.5px; letter-spacing: .05em; color: #8A97A3;">RECOVERY SCORE</div>
+          </div>
+        </div>
+        <div style="font-size: 13.5px; color: #6B7A88; line-height: 1.5; max-width: 220px;">Most after-hours leads were answered, captured, or followed up with.</div>
+      </div>
+    </div>
+
+    <!-- metric cards -->
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 18px;">
+      <sc-for list="{{ metrics }}" as="m" hint-placeholder-count="5">
+        <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 16px; padding: 18px;">
+          <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 30px; letter-spacing: -.02em; color: {{ m.color }};">{{ m.value }}</div>
+          <div style="font-size: 13px; color: #6B7A88; margin-top: 2px; line-height: 1.3;">{{ m.label }}</div>
+          <div style="font-family: 'IBM Plex Mono',monospace; font-size: 11px; color: #0A7D57; margin-top: 8px;">{{ m.delta }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- trend chart + recent leads -->
+    <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px;">
+      <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 18px; padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 17px;">Revenue recovered · last 6 weeks</div>
+          <div style="font-family: 'IBM Plex Mono',monospace; font-size: 11px; color: #8A97A3;">USD</div>
+        </div>
+        <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; height: 180px;">
+          <sc-for list="{{ trendBars }}" as="b" hint-placeholder-count="6">
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; justify-content: flex-end;">
+              <div style="font-family: 'IBM Plex Mono',monospace; font-size: 10.5px; color: #44525E; font-weight: 600;">{{ b.label }}</div>
+              <div style="width: 100%; border-radius: 8px 8px 0 0; height: {{ b.h }}; background: {{ b.fill }};"></div>
+              <div style="font-family: 'IBM Plex Mono',monospace; font-size: 10px; color: #8A97A3;">{{ b.wk }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 18px; padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 17px;">Recent recovered leads</div>
+          <button onClick="{{ goLeads }}" style="background: none; border: none; color: #0A7D57; font-weight: 600; font-size: 13px; cursor: pointer;">View all →</button>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+          <sc-for list="{{ recentLeads }}" as="l" hint-placeholder-count="4">
+            <div onClick="{{ l.onOpen }}" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #F2EFE7; cursor: pointer;">
+              <div style="display: flex; gap: 12px; align-items: center;">
+                <span style="width: 9px; height: 9px; border-radius: 50%; background: {{ l.urgColor }}; flex-shrink: 0;"></span>
+                <div><div style="font-weight: 700; font-size: 14.5px;">{{ l.name }}</div><div style="font-size: 12.5px; color: #6B7A88;">{{ l.intent }} · {{ l.time }}</div></div>
+              </div>
+              <div style="text-align: right;"><div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 14.5px;">{{ l.valueFmt }}</div><div style="font-size: 11px; color: {{ l.statusColor }}; font-weight: 600;">{{ l.status }}</div></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ============================================================= -->
+  <!-- ======================== LEAD INBOX ========================= -->
+  <!-- ============================================================= -->
+  <sc-if value="{{ showLeads }}" hint-placeholder-val="{{ true }}">
+  <div style="max-width: 1240px; margin: 0 auto; padding: 32px 24px 64px;">
+    <div style="margin-bottom: 22px;">
+      <div style="font-family: 'IBM Plex Mono',monospace; font-size: 12px; letter-spacing: .07em; color: #8A97A3;">LEAD INBOX · HUDSON VALLEY HVAC CO.</div>
+      <h1 style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 32px; letter-spacing: -.02em; margin: 6px 0 4px;">Every customer the system caught</h1>
+      <div style="font-size: 14.5px; color: #6B7A88;">23 missed calls recovered this week · 4 need your attention</div>
+    </div>
+    <!-- filter chips -->
+    <div style="display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+      <sc-for list="{{ filterChips }}" as="c" hint-placeholder-count="6">
+        <div style="{{ c.style }}">{{ c.label }}</div>
+      </sc-for>
+    </div>
+    <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 18px; overflow: hidden;">
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.4fr .8fr .9fr; gap: 12px; padding: 14px 22px; background: #F7F5F0; border-bottom: 1px solid #E9E5DC; font-family: 'IBM Plex Mono',monospace; font-size: 10.5px; letter-spacing: .05em; color: #8A97A3;">
+        <div>CUSTOMER</div><div>TIME</div><div>SOURCE</div><div>INTENT</div><div>VALUE</div><div>STATUS</div>
+      </div>
+      <sc-for list="{{ leads }}" as="l" hint-placeholder-count="8">
+        <div onClick="{{ l.onOpen }}" style="display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.4fr .8fr .9fr; gap: 12px; padding: 16px 22px; border-bottom: 1px solid #F2EFE7; cursor: pointer; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 11px;">
+            <span style="width: 9px; height: 9px; border-radius: 50%; background: {{ l.urgColor }}; flex-shrink: 0;"></span>
+            <div><div style="font-weight: 700; font-size: 14.5px;">{{ l.name }}</div><div style="font-size: 11.5px; color: #8A97A3;">{{ l.urgency }} urgency</div></div>
+          </div>
+          <div style="font-size: 13.5px; color: #44525E;">{{ l.time }}</div>
+          <div style="font-size: 13px;"><span style="background: #F4F2EC; border: 1px solid #E9E5DC; border-radius: 7px; padding: 3px 9px; font-family: 'IBM Plex Mono',monospace; font-size: 11px; color: #44525E;">{{ l.source }}</span></div>
+          <div style="font-size: 13.5px; color: #44525E;">{{ l.intent }}</div>
+          <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 14.5px;">{{ l.valueFmt }}</div>
+          <div><span style="background: {{ l.statusBg }}; color: {{ l.statusColor }}; border-radius: 999px; padding: 4px 10px; font-size: 11.5px; font-weight: 700; white-space: nowrap;">{{ l.status }}</span></div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ============================================================= -->
+  <!-- ======================= LEAD DETAIL ========================= -->
+  <!-- ============================================================= -->
+  <sc-if value="{{ showDetail }}" hint-placeholder-val="{{ true }}">
+  <div style="max-width: 1080px; margin: 0 auto; padding: 28px 24px 64px;">
+    <button onClick="{{ goLeads }}" style="background: none; border: none; color: #6B7A88; font-weight: 600; font-size: 14px; cursor: pointer; margin-bottom: 18px; padding: 0;">← Back to inbox</button>
+    <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px;">
+      <!-- left -->
+      <div style="display: flex; flex-direction: column; gap: 18px;">
+        <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 18px; padding: 26px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <h1 style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 28px; letter-spacing: -.02em; margin: 0 0 4px;">{{ activeLead.name }}</h1>
+              <div style="font-family: 'IBM Plex Mono',monospace; font-size: 13px; color: #6B7A88;">{{ activeLead.phone }} · {{ activeLead.source }} · {{ activeLead.time }}</div>
+            </div>
+            <span style="background: {{ activeLead.statusBg }}; color: {{ activeLead.statusColor }}; border-radius: 999px; padding: 6px 13px; font-size: 12.5px; font-weight: 700;">{{ activeLead.status }}</span>
+          </div>
+          <div style="display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap;">
+            <div style="background: #F7F5F0; border: 1px solid #ECE7DD; border-radius: 11px; padding: 10px 14px;"><div style="font-family: 'IBM Plex Mono',monospace; font-size: 10px; color: #8A97A3; letter-spacing: .05em;">EST. VALUE</div><div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 19px; color: #0A7D57;">{{ activeLead.valueFmt }}</div></div>
+            <div style="background: #F7F5F0; border: 1px solid #ECE7DD; border-radius: 11px; padding: 10px 14px;"><div style="font-family: 'IBM Plex Mono',monospace; font-size: 10px; color: #8A97A3; letter-spacing: .05em;">URGENCY</div><div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 19px; color: {{ activeLead.urgColor }};">{{ activeLead.urgency }}</div></div>
+            <div style="background: #F7F5F0; border: 1px solid #ECE7DD; border-radius: 11px; padding: 10px 14px;"><div style="font-family: 'IBM Plex Mono',monospace; font-size: 10px; color: #8A97A3; letter-spacing: .05em;">INTENT</div><div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 19px;">{{ activeLead.intent }}</div></div>
+          </div>
+        </div>
+
+        <!-- call recording placeholder -->
+        <div style="background: #0E1C2B; border-radius: 18px; padding: 22px; color: #fff;">
+          <div style="font-family: 'IBM Plex Mono',monospace; font-size: 10.5px; letter-spacing: .06em; color: #BFE9D6; margin-bottom: 14px;">CALL RECORDING · 1:48</div>
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="width: 44px; height: 44px; border-radius: 50%; background: #0E9F6E; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer;"><span style="font-size: 16px;">▶</span></div>
+            <div style="flex: 1; display: flex; align-items: center; gap: 3px; height: 36px;">
+              <sc-for list="{{ waveform }}" as="w" hint-placeholder-count="40">
+                <div style="flex: 1; background: rgba(191,233,214,.5); border-radius: 2px; height: {{ w }};"></div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+
+        <!-- transcript summary -->
+        <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 18px; padding: 26px;">
+          <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 12px;">Summary</div>
+          <p style="font-size: 15.5px; line-height: 1.6; color: #44525E; margin: 0 0 20px; background: #F7F5F0; border-left: 3px solid #0E9F6E; border-radius: 0 10px 10px 0; padding: 14px 16px;">{{ activeLead.summary }}</p>
+          <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 12px;">AI qualification</div>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <sc-for list="{{ activeLead.qa }}" as="q" hint-placeholder-count="4">
+              <div style="display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px solid #F2EFE7;">
+                <span style="font-size: 14px; color: #6B7A88;">{{ q.q }}</span><span style="font-size: 14px; font-weight: 600; text-align: right;">{{ q.a }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <!-- right -->
+      <div style="display: flex; flex-direction: column; gap: 18px;">
+        <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 18px; padding: 22px;">
+          <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 14px;">Next action</div>
+          <button style="width: 100%; background: #0E9F6E; color: #fff; border: none; border-radius: 11px; padding: 14px; font-weight: 700; font-size: 15px; cursor: pointer; margin-bottom: 10px;">Confirm appointment →</button>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <button style="background: #F4F2EC; border: 1px solid #E4DFD4; border-radius: 10px; padding: 11px; font-weight: 600; font-size: 13.5px; cursor: pointer;">Call customer</button>
+            <button style="background: #F4F2EC; border: 1px solid #E4DFD4; border-radius: 10px; padding: 11px; font-weight: 600; font-size: 13.5px; cursor: pointer;">Send text</button>
+            <button style="background: #F4F2EC; border: 1px solid #E4DFD4; border-radius: 10px; padding: 11px; font-weight: 600; font-size: 13.5px; cursor: pointer;">Mark booked</button>
+            <button style="background: #FBE9E9; border: 1px solid #F0DADB; color: #C9474E; border-radius: 10px; padding: 11px; font-weight: 600; font-size: 13.5px; cursor: pointer;">Escalate</button>
+          </div>
+        </div>
+        <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 18px; padding: 22px;">
+          <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 16px;">Follow-up timeline</div>
+          <div style="display: flex; flex-direction: column;">
+            <sc-for list="{{ activeLead.timeline }}" as="t" hint-placeholder-count="4">
+              <div style="display: flex; gap: 13px; padding-bottom: 16px;">
+                <div style="display: flex; flex-direction: column; align-items: center;"><span style="width: 11px; height: 11px; border-radius: 50%; background: {{ t.color }}; flex-shrink: 0; margin-top: 3px;"></span><span style="width: 2px; flex: 1; background: #ECE7DD;"></span></div>
+                <div style="padding-bottom: 4px;"><div style="font-weight: 600; font-size: 14px;">{{ t.event }}</div><div style="font-family: 'IBM Plex Mono',monospace; font-size: 11px; color: #8A97A3; margin-top: 2px;">{{ t.time }}</div></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="background: #FBF6EE; border: 1px solid #F0E4D2; border-radius: 18px; padding: 22px;">
+          <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 10px;">Owner notes</div>
+          <div style="font-size: 14px; color: #6B7A88; line-height: 1.5; font-style: italic;">"Repeat customer from 2023 — replaced her condenser. Priority booking."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ============================================================= -->
+  <!-- ====================== WEEKLY REPORT ======================== -->
+  <!-- ============================================================= -->
+  <sc-if value="{{ showReport }}" hint-placeholder-val="{{ true }}">
+  <div style="max-width: 760px; margin: 0 auto; padding: 36px 24px 64px;">
+    <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 20px; overflow: hidden; box-shadow: 0 30px 60px -30px rgba(16,24,40,.2);">
+      <div style="background: #0E1C2B; color: #fff; padding: 32px;">
+        <div style="font-family: 'IBM Plex Mono',monospace; font-size: 11px; letter-spacing: .06em; color: #7E93A3; margin-bottom: 16px;">WEEKLY REVENUE RECOVERY REPORT · MON JUN 9</div>
+        <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 26px; line-height: 1.2; letter-spacing: -.02em;">Your system recovered an estimated <span style="color: #5FD3A4;">$8,750</span> this week.</div>
+        <div style="font-size: 14.5px; color: #B6C4D0; margin-top: 12px;">Hudson Valley HVAC Co. · 11 appointment opportunities captured</div>
+      </div>
+      <div style="padding: 32px;">
+        <div style="background: linear-gradient(135deg, #0E9F6E, #0A7D57); border-radius: 16px; padding: 22px; color: #fff; margin-bottom: 24px;">
+          <div style="font-size: 15px; line-height: 1.55;">Your system captured <b>11 appointment opportunities</b> this week. Based on your average job value of <b>$795</b>, estimated recovered revenue was <b>$8,745</b>.</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px;">
+          <sc-for list="{{ reportStats }}" as="r" hint-placeholder-count="6">
+            <div style="background: #F7F5F0; border: 1px solid #ECE7DD; border-radius: 13px; padding: 16px;">
+              <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 28px; color: {{ r.color }};">{{ r.value }}</div>
+              <div style="font-size: 13px; color: #6B7A88;">{{ r.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 14px;">Top lead sources</div>
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px;">
+          <sc-for list="{{ sources }}" as="s" hint-placeholder-count="3">
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px;"><span style="font-weight: 600;">{{ s.name }}</span><span style="color: #6B7A88;">{{ s.count }} leads</span></div>
+              <div style="height: 9px; background: #EDE8DE; border-radius: 999px; overflow: hidden;"><div style="height: 100%; width: {{ s.pct }}; background: #0E9F6E; border-radius: 999px;"></div></div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 14px;">Recommended improvements</div>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;">
+          <sc-for list="{{ recommendations }}" as="rec" hint-placeholder-count="3">
+            <div style="display: flex; gap: 11px; background: #FBF6EE; border: 1px solid #F0E4D2; border-radius: 12px; padding: 14px;"><span style="color: #D98A3D; font-weight: 700;">→</span><span style="font-size: 14.5px; color: #44525E;">{{ rec }}</span></div>
+          </sc-for>
+        </div>
+
+        <div style="background: #F7F5F0; border: 1px dashed #D8D2C6; border-radius: 12px; padding: 16px; font-size: 12px; color: #8A97A3; line-height: 1.55;">Estimated recovered revenue is calculated from booked and recovered opportunities multiplied by your stated average customer value of $795. These are estimates of potential value, not a guarantee of collected revenue or completed jobs.</div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ============================================================= -->
+  <!-- ======================= ONBOARDING ========================== -->
+  <!-- ============================================================= -->
+  <sc-if value="{{ showOnboard }}" hint-placeholder-val="{{ true }}">
+  <div style="max-width: 920px; margin: 0 auto; padding: 32px 24px 64px;">
+    <div style="margin-bottom: 24px;">
+      <div style="font-family: 'IBM Plex Mono',monospace; font-size: 12px; letter-spacing: .07em; color: #8A97A3;">SETUP · {{ stepLabel }}</div>
+      <h1 style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 30px; letter-spacing: -.02em; margin: 6px 0 0;">Let's set up your recovery system</h1>
+    </div>
+    <!-- progress -->
+    <div style="display: flex; gap: 6px; margin-bottom: 28px;">
+      <sc-for list="{{ stepDots }}" as="d" hint-placeholder-count="7">
+        <div style="flex: 1; height: 6px; border-radius: 999px; background: {{ d.color }};"></div>
+      </sc-for>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 240px 1fr; gap: 28px; align-items: start;">
+      <!-- step list -->
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="7">
+          <div onClick="{{ s.onClick }}" style="{{ s.style }}">
+            <span style="width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; background: {{ s.dotBg }}; color: {{ s.dotColor }};">{{ s.mark }}</span>
+            <span style="font-size: 14px; font-weight: 600;">{{ s.title }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- step body -->
+      <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 18px; padding: 30px; min-height: 360px;">
+        <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 22px; margin-bottom: 6px;">{{ activeStep.title }}</div>
+        <div style="font-size: 15px; color: #6B7A88; margin-bottom: 24px;">{{ activeStep.desc }}</div>
+
+        <!-- generic fields -->
+        <sc-if value="{{ activeStep.showFields }}" hint-placeholder-val="{{ true }}">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <sc-for list="{{ activeStep.fields }}" as="f" hint-placeholder-count="4">
+            <div style="{{ f.wrapStyle }}">
+              <div style="font-size: 12.5px; font-weight: 600; color: #44525E; margin-bottom: 7px;">{{ f.label }}</div>
+              <div style="background: #F7F5F0; border: 1px solid #E4DFD4; border-radius: 10px; padding: 12px 13px; font-size: 14.5px; color: #44525E;">{{ f.value }}</div>
+            </div>
+          </sc-for>
+        </div>
+        </sc-if>
+
+        <!-- toggle rules -->
+        <sc-if value="{{ activeStep.showToggles }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <sc-for list="{{ activeStep.toggles }}" as="t" hint-placeholder-count="4">
+            <div style="display: flex; justify-content: space-between; align-items: center; background: #F7F5F0; border: 1px solid #ECE7DD; border-radius: 12px; padding: 16px;">
+              <span style="font-size: 14.5px; font-weight: 600;">{{ t.label }}</span>
+              <div style="width: 46px; height: 26px; border-radius: 999px; background: {{ t.bg }}; position: relative; transition: background .2s;"><div style="position: absolute; top: 3px; left: {{ t.dotX }}; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: left .2s;"></div></div>
+            </div>
+          </sc-for>
+        </div>
+        </sc-if>
+
+        <!-- script preview -->
+        <sc-if value="{{ activeStep.showScript }}" hint-placeholder-val="{{ true }}">
+        <div style="background: #0E1C2B; border-radius: 14px; padding: 20px; color: #fff;">
+          <div style="font-family: 'IBM Plex Mono',monospace; font-size: 10.5px; letter-spacing: .06em; color: #BFE9D6; margin-bottom: 14px;">GENERATED AFTER-HOURS GREETING</div>
+          <div style="font-size: 15px; line-height: 1.6; color: #DCE5EC;">"Thanks for calling Hudson Valley HVAC — we're closed right now, but I can still help. Is this an emergency like no heat or a water leak, or would you like to book a visit? I can get you on the schedule tonight."</div>
+          <div style="margin-top: 16px; border-top: 1px solid rgba(255,255,255,.1); padding-top: 14px; font-family: 'IBM Plex Mono',monospace; font-size: 10.5px; letter-spacing: .06em; color: #BFE9D6;">MISSED-CALL TEXT-BACK</div>
+          <div style="font-size: 15px; line-height: 1.6; color: #DCE5EC; margin-top: 8px;">"Hi, this is Hudson Valley HVAC — sorry we missed your call! What's going on with your heating or cooling? Reply here and we'll get you scheduled."</div>
+        </div>
+        </sc-if>
+
+        <!-- launch checklist -->
+        <sc-if value="{{ activeStep.showChecklist }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <sc-for list="{{ launchChecklist }}" as="c" hint-placeholder-count="6">
+            <div style="display: flex; align-items: center; gap: 12px; background: #F7F5F0; border: 1px solid #ECE7DD; border-radius: 12px; padding: 14px;">
+              <span style="width: 22px; height: 22px; border-radius: 50%; background: {{ c.bg }}; color: {{ c.color }}; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0;">{{ c.mark }}</span>
+              <span style="font-size: 14.5px; font-weight: 600; color: #44525E;">{{ c.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+        </sc-if>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 28px; padding-top: 22px; border-top: 1px solid #F2EFE7;">
+          <button onClick="{{ prevStep }}" style="background: #F4F2EC; border: 1px solid #E4DFD4; border-radius: 10px; padding: 12px 20px; font-weight: 600; font-size: 14px; cursor: pointer;">← Back</button>
+          <button onClick="{{ nextStep }}" style="background: #0E9F6E; color: #fff; border: none; border-radius: 10px; padding: 12px 24px; font-weight: 700; font-size: 14px; cursor: pointer;">{{ nextLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ============================================================= -->
+  <!-- ====================== AUDIT REPORT ========================= -->
+  <!-- ============================================================= -->
+  <sc-if value="{{ showAudit }}" hint-placeholder-val="{{ true }}">
+  <div style="max-width: 820px; margin: 0 auto; padding: 36px 24px 64px;">
+    <div style="background: #fff; border: 1px solid #E9E5DC; border-radius: 20px; overflow: hidden; box-shadow: 0 30px 60px -30px rgba(16,24,40,.2);">
+      <div style="background: linear-gradient(135deg, #0E1C2B, #15324A); color: #fff; padding: 34px; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -80px; right: -50px; width: 280px; height: 280px; border-radius: 50%; background: radial-gradient(circle, rgba(201,71,78,.25), transparent 70%);"></div>
+        <div style="position: relative;">
+          <div style="font-family: 'IBM Plex Mono',monospace; font-size: 11px; letter-spacing: .06em; color: #F0C79B; margin-bottom: 14px;">MISSED REVENUE AUDIT · SAMPLE</div>
+          <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 28px; letter-spacing: -.02em; margin-bottom: 6px;">Beacon Valley Plumbing</div>
+          <div style="font-size: 14.5px; color: #B6C4D0;">We called after hours and tested the full customer path. Here's where money is leaking.</div>
+        </div>
+      </div>
+      <div style="padding: 32px;">
+        <!-- risk banner -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px;">
+          <div style="background: #FBE9E9; border: 1px solid #F0DADB; border-radius: 16px; padding: 20px;">
+            <div style="font-family: 'IBM Plex Mono',monospace; font-size: 10.5px; letter-spacing: .06em; color: #C9474E;">RISK LEVEL</div>
+            <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 30px; color: #C9474E; margin-top: 4px;">High</div>
+            <div style="font-size: 13px; color: #99565A; margin-top: 4px;">Customer friction score: 8.5 / 10</div>
+          </div>
+          <div style="background: #0E1C2B; border-radius: 16px; padding: 20px; color: #fff;">
+            <div style="font-family: 'IBM Plex Mono',monospace; font-size: 10.5px; letter-spacing: .06em; color: #F0C79B;">EST. MONTHLY MISSED REVENUE</div>
+            <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 800; font-size: 30px; margin-top: 4px;">$2,400–$7,500</div>
+            <div style="font-size: 13px; color: #B6C4D0; margin-top: 4px;">Estimated range, based on local job values</div>
+          </div>
+        </div>
+
+        <div style="font-family: 'Schibsted Grotesk',sans-serif; font-weight: 700; font-size: 18px; margin-bottom: 14px;">What we tested</div>
+        <div style="border: 1px solid #ECE7DD; border-radius: 14px; overflow: hidden; margin-bottom: 28px;">
+          <sc-for list="{{ auditTests }}" as="a" hint-placeholder-count="6">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 18px; border-bottom: 1px solid #F2EFE7;">
+              <span style="font-size: 14.5px; color: #44525E;">{{ a.test }}</span>
+              <span style="display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 700; color: {{ a.color }};"><span style="width: 8px; height: 8px; border-radius: 50%; background: {{ a.color }};"></span>{{ a.result }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #0E9F6E, #0A7D57); border-radius: 16px; padding: 24px; color: #fff;">
+          <div style="font-family: 'IBM Plex Mono',monospace; font-size: 10.5px; letter-spacing: .06em; opacity: .85; margin-bottom: 10px;">RECOMMENDED FIX</div>
+          <div style="font-size: 16.5px; line-height: 1.55; font-weight: 500;">Install after-hours answering, urgent-call escalation, and missed-call text-back immediately. Based on your test, capturing even 4 of these leads per month would more than cover the system.</div>
+          <button onClick="{{ goOnboard }}" style="margin-top: 18px; background: #fff; color: #0A7D57; border: none; border-radius: 11px; padding: 14px 22px; font-weight: 700; font-size: 15px; cursor: pointer;">Start recovering these leads →</button>
+        </div>
+        <div style="font-size: 12px; color: #8A97A3; margin-top: 16px; line-height: 1.55;">Missed revenue range is an estimate based on typical local job values and the gaps found during the audit. Actual results depend on call volume and your close rate.</div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    view: 'landing',
+    avg: 350,
+    recovered: 4,
+    cost: 399,
+    leadId: 1,
+    step: 1,
+  };
+
+  go = (v) => { this.setState({ view: v }); if (typeof window !== 'undefined') window.scrollTo(0, 0); };
+  openLead = (id) => { this.setState({ view: 'detail', leadId: id }); if (typeof window !== 'undefined') window.scrollTo(0, 0); };
+
+  renderVals() {
+    const fmt = (n) => '$' + Math.round(n).toLocaleString('en-US');
+    const { view, avg, recovered, cost, step } = this.state;
+
+    // ---- prototype tabs ----
+    const tabDefs = [
+      ['landing', 'Landing'], ['dashboard', 'Dashboard'], ['leads', 'Leads'],
+      ['report', 'Weekly Report'], ['onboard', 'Onboarding'], ['audit', 'Audit'],
+    ];
+    const tabBase = "border:none;background:transparent;font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:13.5px;padding:8px 13px;border-radius:9px;cursor:pointer;white-space:nowrap;color:#5A6B7B;";
+    const tabActive = "border:none;background:#0E1C2B;color:#fff;font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:13.5px;padding:8px 13px;border-radius:9px;cursor:pointer;white-space:nowrap;";
+    const activeView = (view === 'detail') ? 'leads' : view;
+    const tabs = tabDefs.map(([id, label]) => ({
+      label, onClick: () => this.go(id),
+      style: activeView === id ? tabActive : tabBase,
+    }));
+
+    // ---- ROI ----
+    const recoveredRev = avg * recovered;
+    const net = recoveredRev - cost;
+
+    // ---- landing content ----
+    const withoutSteps = [
+      'Customer calls after hours — your business is closed or busy.',
+      'The call rings out and drops to voicemail.',
+      'Most callers hang up. They don\u2019t leave a message.',
+      'They call the next company on the list instead.',
+      'You never even know that lead existed.',
+    ];
+    const withSteps = [
+      'The call is answered or texted back within seconds.',
+      'We capture the name, number, and what they need.',
+      'Urgent jobs get escalated straight to your phone.',
+      'The appointment gets booked or requested for approval.',
+      'You see every lead, every dollar, every Monday.',
+    ];
+    const howSteps = [
+      { n: '1', title: 'We audit your path', desc: 'We call after hours and find exactly where customers drop off today.' },
+      { n: '2', title: 'We install capture', desc: 'Call answering, text-back, booking and escalation — configured for your business.' },
+      { n: '3', title: 'Leads get answered', desc: 'Calls and texts are handled automatically, around the clock, with your rules.' },
+      { n: '4', title: 'You get results', desc: 'Booked appointments, owner alerts, and a weekly revenue recovery report.' },
+    ];
+    const features = [
+      { title: '24/7 missed-call response', desc: 'Every call after hours gets handled, never ignored.' },
+      { title: 'AI voice answering', desc: 'A natural-sounding answer that captures the details.' },
+      { title: 'Instant SMS text-back', desc: 'Missed calls get a text within seconds, not hours.' },
+      { title: 'Appointment booking', desc: 'Books or requests visits inside your real availability.' },
+      { title: 'Lead qualification', desc: 'Asks the right questions so you know the job before you call.' },
+      { title: 'Urgent lead escalation', desc: 'Emergencies route straight to the owner\u2019s phone.' },
+      { title: 'Call summaries & transcripts', desc: 'Every conversation saved, summarized, and searchable.' },
+      { title: 'No-show follow-up', desc: 'Automatic nudges when a customer hasn\u2019t booked yet.' },
+      { title: 'Weekly recovery reports', desc: 'A clear dollar figure for what was recovered.' },
+      { title: 'Human fallback option', desc: 'Escalate to a real person or VA when it matters.' },
+      { title: 'CRM & calendar sync', desc: 'Works with Google Calendar and your existing tools.' },
+    ];
+    const industries = [
+      { name: 'HVAC & Plumbing', value: '$300\u2013$1,200', why: 'A no-heat or water-leak call at midnight is an emergency job — and the first company to answer almost always wins it.' },
+      { name: 'Med Spas', value: '$200\u2013$900', why: 'High-intent bookings come in after work hours. A missed call is a high-value treatment booked somewhere else.' },
+      { name: 'Dog Grooming', value: '$60\u2013$150', why: 'Owners book in the evening. Miss the call and they scroll to the next groomer with an open slot.' },
+      { name: 'Barber Shops & Salons', value: '$40\u2013$120 / chair', why: 'Every empty chair is lost revenue. Multiply missed calls across stylists and it adds up fast.' },
+      { name: 'Auto Repair', value: '$150\u2013$1,500', why: 'A breakdown is urgent. Drivers call the first shop that picks up or texts back same day.' },
+      { name: 'Roofing & Restoration', value: '$1,500\u2013$15,000', why: 'Storm and water-damage jobs are huge and time-sensitive. One missed call can be a five-figure loss.' },
+    ];
+
+    const baseTierCard = "background:#fff;border:1px solid #E9E5DC;border-radius:20px;padding:28px;";
+    const popTierCard = "background:#0E1C2B;border:1px solid #0E1C2B;border-radius:20px;padding:28px;color:#fff;box-shadow:0 30px 60px -28px rgba(14,28,43,.5);transform:translateY(-8px);";
+    const tiers = [
+      { name: 'Starter', price: '$299', tagline: 'Stop the most obvious leak.', popular: false,
+        cardStyle: baseTierCard, featColor: 'color:#44525E;',
+        btnStyle: "width:100%;background:#F4F2EC;border:1px solid #E4DFD4;border-radius:11px;padding:13px;font-family:'Hanken Grotesk',sans-serif;font-weight:700;font-size:15px;cursor:pointer;color:#0E1C2B;",
+        features: ['Missed-call text-back', 'Lead capture & inbox', 'Weekly recovery report', 'Basic setup & scripts'] },
+      { name: 'Growth', price: '$499', tagline: 'Answer, qualify, and book — automatically.', popular: true,
+        cardStyle: popTierCard, featColor: 'color:#CBD6DF;',
+        btnStyle: "width:100%;background:#0E9F6E;border:none;border-radius:11px;padding:13px;font-family:'Hanken Grotesk',sans-serif;font-weight:700;font-size:15px;cursor:pointer;color:#fff;",
+        features: ['Everything in Starter', 'AI call answering', 'Appointment requests', 'Owner alerts', 'Follow-up automation', 'Monthly optimization'] },
+      { name: 'Premium', price: '$799+', tagline: 'Full booking, routing, and human fallback.', popular: false,
+        cardStyle: baseTierCard, featColor: 'color:#44525E;',
+        btnStyle: "width:100%;background:#F4F2EC;border:1px solid #E4DFD4;border-radius:11px;padding:13px;font-family:'Hanken Grotesk',sans-serif;font-weight:700;font-size:15px;cursor:pointer;color:#0E1C2B;",
+        features: ['Everything in Growth', 'Full booking integration', 'Urgent call routing', 'Custom scripts', 'Human / VA escalation', 'Advanced reporting'] },
+    ];
+    const auditPromise = [
+      'We call your business after hours, like a real customer.',
+      'We test voicemail, text-back, booking, and follow-up.',
+      'We show exactly where customers are dropping off.',
+      'We estimate the revenue leaking out every month.',
+      'We show what the system would recover for you.',
+    ];
+    const trust = [
+      'The owner gets notified instantly on urgent jobs.',
+      'The AI escalates to a human when it\u2019s unsure.',
+      'Every call summary and transcript is saved.',
+      'Booking rules are set and controlled by you.',
+      'Emergency calls can route straight to your phone.',
+      'Weekly reports show exactly what happened. No black box.',
+    ];
+
+    // ---- leads ----
+    const urgColor = { Critical: '#C9474E', High: '#D98A3D', Medium: '#C9A23D', Low: '#0E9F6E' };
+    const statusStyle = {
+      'Booked': { bg: '#E7F5EF', color: '#0A7D57' },
+      'Needs follow-up': { bg: '#FBF1E3', color: '#B5731F' },
+      'Escalated': { bg: '#FBE9E9', color: '#C9474E' },
+      'Lost': { bg: '#F0EEE9', color: '#8A97A3' },
+      'Waiting on customer': { bg: '#EAF0F6', color: '#3E6E9E' },
+      'Completed': { bg: '#E7F5EF', color: '#0A7D57' },
+      'Quote requested': { bg: '#EAF0F6', color: '#3E6E9E' },
+    };
+    const rawLeads = [
+      { id: 1, name: 'Sarah M.', phone: '(845) 555-0142', time: '8:42 PM', source: 'Missed Call', status: 'Booked', intent: 'AC not cooling', value: 450, urgency: 'High',
+        summary: 'Sarah called after hours because her AC stopped cooling. She requested the earliest available appointment. The system offered Tuesday at 10:00 AM, confirmed her address, and sent the booking request to the owner.',
+        qa: [ { q: 'Issue type', a: 'AC not cooling' }, { q: 'Emergency?', a: 'No — comfortable overnight' }, { q: 'Preferred time', a: 'Earliest available' }, { q: 'Address confirmed', a: 'Yes — 14 Maple Ave' } ],
+        timeline: [ { event: 'Missed call detected', time: '8:42 PM', color: '#D98A3D' }, { event: 'AI answered & qualified', time: '8:42 PM', color: '#0E9F6E' }, { event: 'Tuesday 10:00 AM offered', time: '8:44 PM', color: '#0E9F6E' }, { event: 'Booking request sent to owner', time: '8:45 PM', color: '#0A7D57' } ] },
+      { id: 2, name: 'Mike R.', phone: '(845) 555-0188', time: '6:17 AM', source: 'Website Form', status: 'Needs follow-up', intent: 'Furnace issue', value: 300, urgency: 'Medium',
+        summary: 'Mike submitted the website form early morning about a furnace that won\u2019t stay lit. The system sent an instant text and a follow-up two hours later. Awaiting his reply to confirm a visit window.',
+        qa: [ { q: 'Issue type', a: 'Furnace won\u2019t stay lit' }, { q: 'Emergency?', a: 'No — has space heaters' }, { q: 'Preferred time', a: 'This week, mornings' }, { q: 'Follow-ups sent', a: '2' } ],
+        timeline: [ { event: 'Website form received', time: '6:17 AM', color: '#0E9F6E' }, { event: 'Instant text sent', time: '6:17 AM', color: '#0E9F6E' }, { event: 'Follow-up #1 sent', time: '8:20 AM', color: '#D98A3D' }, { event: 'Awaiting customer reply', time: 'now', color: '#C9A23D' } ] },
+      { id: 3, name: 'Diane P.', phone: '(845) 555-0119', time: '10:31 PM', source: 'AI Voice', status: 'Escalated', intent: 'Water leak', value: 1200, urgency: 'Critical',
+        summary: 'Diane called late at night about active water leaking near her water heater. The system flagged it as an emergency, escalated immediately to the owner\u2019s phone, and texted Diane that someone would call within 15 minutes.',
+        qa: [ { q: 'Issue type', a: 'Active water leak' }, { q: 'Emergency?', a: 'YES — water spreading' }, { q: 'Escalated to owner', a: 'Yes — called at 10:32 PM' }, { q: 'Customer notified', a: 'Yes' } ],
+        timeline: [ { event: 'After-hours call answered', time: '10:31 PM', color: '#0E9F6E' }, { event: 'Emergency keyword detected', time: '10:31 PM', color: '#C9474E' }, { event: 'Owner phone called', time: '10:32 PM', color: '#C9474E' }, { event: 'Customer texted ETA', time: '10:33 PM', color: '#0A7D57' } ] },
+      { id: 4, name: 'Carlos G.', phone: '(845) 555-0173', time: 'Sun 9:15 AM', source: 'SMS', status: 'Quote requested', intent: 'Duct cleaning', value: 250, urgency: 'Low',
+        summary: 'Carlos texted on Sunday asking about duct cleaning pricing. The system shared a starting range, asked about home size, and offered to book an estimate. Awaiting his preferred date.',
+        qa: [ { q: 'Service', a: 'Duct cleaning' }, { q: 'Home size', a: '4 bed / 2,400 sqft' }, { q: 'Quote shared', a: 'Yes — from $250' }, { q: 'Next step', a: 'Book estimate' } ],
+        timeline: [ { event: 'SMS received', time: 'Sun 9:15 AM', color: '#0E9F6E' }, { event: 'Pricing range shared', time: 'Sun 9:16 AM', color: '#0E9F6E' }, { event: 'Estimate offered', time: 'Sun 9:18 AM', color: '#D98A3D' } ] },
+      { id: 5, name: 'Tanya W.', phone: '(845) 555-0150', time: '11:48 PM', source: 'Missed Call', status: 'Booked', intent: 'No heat upstairs', value: 520, urgency: 'High',
+        summary: 'Tanya called near midnight about no heat upstairs. The system qualified the issue, confirmed it was not a full outage, and booked the first morning slot.',
+        qa: [ { q: 'Issue type', a: 'No heat upstairs' }, { q: 'Emergency?', a: 'No — has heat downstairs' }, { q: 'Booked', a: 'Mon 8:00 AM' }, { q: 'Address confirmed', a: 'Yes' } ],
+        timeline: [ { event: 'Missed call detected', time: '11:48 PM', color: '#D98A3D' }, { event: 'AI answered & booked', time: '11:50 PM', color: '#0A7D57' } ] },
+      { id: 6, name: 'Robert E.', phone: '(845) 555-0166', time: '7:03 AM', source: 'AI Voice', status: 'Waiting on customer', intent: 'Thermostat replace', value: 180, urgency: 'Low',
+        summary: 'Robert asked about replacing an old thermostat. The system gave options and is waiting on him to pick a model before scheduling.',
+        qa: [ { q: 'Service', a: 'Thermostat replacement' }, { q: 'Emergency?', a: 'No' }, { q: 'Options shared', a: 'Yes — 3 models' }, { q: 'Next step', a: 'Customer to choose' } ],
+        timeline: [ { event: 'Call answered', time: '7:03 AM', color: '#0E9F6E' }, { event: 'Options texted', time: '7:05 AM', color: '#D98A3D' } ] },
+      { id: 7, name: 'Priya N.', phone: '(845) 555-0134', time: '9:27 PM', source: 'SMS', status: 'Completed', intent: 'AC tune-up', value: 145, urgency: 'Low',
+        summary: 'Priya booked a seasonal AC tune-up via text. Visit completed and marked done.',
+        qa: [ { q: 'Service', a: 'AC tune-up' }, { q: 'Emergency?', a: 'No' }, { q: 'Status', a: 'Completed' }, { q: 'Rating', a: '5 stars' } ],
+        timeline: [ { event: 'SMS received', time: '9:27 PM', color: '#0E9F6E' }, { event: 'Booked', time: '9:30 PM', color: '#0A7D57' }, { event: 'Visit completed', time: 'Thu', color: '#0A7D57' } ] },
+      { id: 8, name: 'Frank D.', phone: '(845) 555-0101', time: '5:51 AM', source: 'Missed Call', status: 'Lost', intent: 'Heat pump quote', value: 900, urgency: 'Medium',
+        summary: 'Frank requested a heat pump quote but went with another company before the follow-up window closed. Logged as lost for learning.',
+        qa: [ { q: 'Service', a: 'Heat pump quote' }, { q: 'Emergency?', a: 'No' }, { q: 'Outcome', a: 'Chose competitor' }, { q: 'Reason', a: 'Wanted same-day quote' } ],
+        timeline: [ { event: 'Missed call detected', time: '5:51 AM', color: '#D98A3D' }, { event: 'Text-back sent', time: '5:51 AM', color: '#0E9F6E' }, { event: 'No reply — marked lost', time: 'Wed', color: '#8A97A3' } ] },
+    ];
+    const leads = rawLeads.map((l) => ({
+      ...l,
+      valueFmt: fmt(l.value),
+      urgColor: urgColor[l.urgency] || '#8A97A3',
+      statusBg: (statusStyle[l.status] || {}).bg || '#F0EEE9',
+      statusColor: (statusStyle[l.status] || {}).color || '#8A97A3',
+      onOpen: () => this.openLead(l.id),
+    }));
+    const activeLead = leads.find((l) => l.id === this.state.leadId) || leads[0];
+    const recentLeads = leads.slice(0, 4);
+
+    // ---- dashboard ----
+    const metrics = [
+      { value: '64', label: 'Calls answered', delta: '↑ 9', color: '#0E1C2B' },
+      { value: '23', label: 'Missed calls recovered', delta: '↑ 6', color: '#0A7D57' },
+      { value: '18', label: 'New leads captured', delta: '↑ 4', color: '#0E1C2B' },
+      { value: '11', label: 'Appointments booked', delta: '↑ 3', color: '#0A7D57' },
+      { value: '4', label: 'Urgent calls escalated', delta: '→ same', color: '#C9474E' },
+    ];
+    const trendRaw = [
+      { wk: 'May 5', label: '$4.1k', v: 4100 }, { wk: 'May 12', label: '$5.3k', v: 5300 },
+      { wk: 'May 19', label: '$4.8k', v: 4800 }, { wk: 'May 26', label: '$6.2k', v: 6200 },
+      { wk: 'Jun 2', label: '$7.2k', v: 7200 }, { wk: 'Jun 9', label: '$8.8k', v: 8750 },
+    ];
+    const maxV = 9000;
+    const trendBars = trendRaw.map((b, i) => ({
+      ...b,
+      h: Math.round((b.v / maxV) * 100) + '%',
+      fill: i === trendRaw.length - 1 ? '#0E9F6E' : '#CDE9DC',
+    }));
+
+    // ---- weekly report ----
+    const reportStats = [
+      { value: '64', label: 'Calls answered', color: '#0E1C2B' },
+      { value: '18', label: 'Leads captured', color: '#0E1C2B' },
+      { value: '11', label: 'Appointments booked', color: '#0A7D57' },
+      { value: '4', label: 'Urgent issues escalated', color: '#C9474E' },
+      { value: '3', label: 'Missed opportunities', color: '#D98A3D' },
+      { value: '$8,750', label: 'Estimated revenue recovered', color: '#0A7D57' },
+    ];
+    const sources = [
+      { name: 'After-hours missed calls', count: 23, pct: '100%' },
+      { name: 'Website form', count: 9, pct: '39%' },
+      { name: 'SMS / text-in', count: 7, pct: '30%' },
+    ];
+    const recommendations = [
+      'Add a second emergency contact — 1 urgent call waited 6 min for owner pickup.',
+      'Enable weekend booking — 4 of this week\u2019s leads came in Sat\u2013Sun.',
+      'Shorten follow-up delay to 1 hour for high-value furnace and heat-pump jobs.',
+    ];
+
+    // ---- onboarding ----
+    const stepTitles = ['Business Profile', 'Customer Value', 'Capture Rules', 'Booking Rules', 'Escalation', 'Script Preview', 'Launch Checklist'];
+    const stepData = [
+      { title: 'Business profile', desc: 'Tell us who you are and when you\u2019re open so we know when to step in.', showFields: true,
+        fields: [ { label: 'Business name', value: 'Hudson Valley HVAC Co.' }, { label: 'Industry', value: 'HVAC / Plumbing' }, { label: 'Service area', value: 'Dutchess & Ulster County, NY' }, { label: 'Business hours', value: 'Mon\u2013Fri, 8 AM \u2013 6 PM' }, { label: 'Emergency availability', value: '24/7 for water leaks & no-heat', wide: true } ] },
+      { title: 'Customer value', desc: 'These numbers power your revenue recovery estimates. Be realistic.', showFields: true,
+        fields: [ { label: 'Average customer value', value: '$350' }, { label: 'Average emergency job value', value: '$795' }, { label: 'Lifetime value (if known)', value: '$2,400' }, { label: 'Average close rate', value: '55%' } ] },
+      { title: 'Capture rules', desc: 'Decide how aggressively the system should catch and respond to leads.', showToggles: true,
+        toggles: [ { label: 'Answer calls after hours', on: true }, { label: 'Instant text-back on missed calls', on: true }, { label: 'Escalate urgent issues to owner', on: true }, { label: 'Book directly (off = request approval first)', on: false } ] },
+      { title: 'Booking rules', desc: 'Set the guardrails so the system only books what you can actually serve.', showFields: true,
+        fields: [ { label: 'Calendar', value: 'Google Calendar — connected' }, { label: 'Appointment windows', value: '8\u201310 AM, 12\u20132 PM, 3\u20135 PM' }, { label: 'Buffer time', value: '30 min between jobs' }, { label: 'Services offered', value: 'Repair, install, tune-up, duct cleaning' }, { label: 'Service-area restrictions', value: 'Within 25 miles of Poughkeepsie', wide: true } ] },
+      { title: 'Escalation', desc: 'When something is urgent, who do we reach and how?', showFields: true,
+        fields: [ { label: 'Owner phone', value: '(845) 555-0100' }, { label: 'Backup contact', value: 'Dispatch — (845) 555-0105' }, { label: 'Emergency keywords', value: 'leak, no heat, gas, flooding, burst' }, { label: 'When to call vs text', value: 'Call on Critical, text on High' } ] },
+      { title: 'Script preview', desc: 'Here\u2019s the greeting and text-back we generated from your business. Edit anything.', showScript: true },
+      { title: 'Launch checklist', desc: 'A few final connections and your recovery system goes live.', showChecklist: true },
+    ];
+    const activeStep = stepData[step - 1] || stepData[0];
+    const steps = stepTitles.map((title, i) => {
+      const n = i + 1;
+      const isDone = n < step, isCur = n === step;
+      return {
+        title,
+        mark: isDone ? '\u2713' : String(n),
+        dotBg: isDone ? '#0E9F6E' : (isCur ? '#0E1C2B' : '#EDE8DE'),
+        dotColor: (isDone || isCur) ? '#fff' : '#8A97A3',
+        onClick: () => this.setState({ step: n }),
+        style: isCur
+          ? "display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:11px;cursor:pointer;background:#F4F2EC;border:1px solid #E4DFD4;"
+          : "display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:11px;cursor:pointer;background:transparent;border:1px solid transparent;",
+      };
+    });
+    const stepDots = stepTitles.map((_, i) => ({ color: (i + 1) <= step ? '#0E9F6E' : '#EDE8DE' }));
+    if (activeStep.fields) activeStep.fields = activeStep.fields.map((f) => ({ ...f, wrapStyle: f.wide ? 'grid-column:1 / -1;' : '' }));
+    if (activeStep.toggles) activeStep.toggles = activeStep.toggles.map((t) => ({ ...t, bg: t.on ? '#0E9F6E' : '#D8D2C6', dotX: t.on ? '23px' : '3px' }));
+    const launchChecklist = [
+      { label: 'Phone forwarding connected', done: true }, { label: 'SMS number active', done: true },
+      { label: 'Google Calendar connected', done: true }, { label: 'Business rules reviewed', done: true },
+      { label: 'Test call completed', done: false }, { label: 'Weekly report enabled', done: false },
+    ].map((c) => ({ ...c, mark: c.done ? '\u2713' : '', bg: c.done ? '#0E9F6E' : '#EDE8DE', color: c.done ? '#fff' : '#8A97A3' }));
+
+    // ---- audit ----
+    const auditTests = [
+      { test: 'Called after hours', result: 'Yes', color: '#0A7D57' },
+      { test: 'Result', result: 'Voicemail', color: '#C9474E' },
+      { test: 'Missed-call text-back', result: 'None', color: '#C9474E' },
+      { test: 'Online booking available', result: 'No', color: '#C9474E' },
+      { test: 'Emergency routing', result: 'Not clear', color: '#D98A3D' },
+      { test: 'Follow-up speed', result: 'No follow-up', color: '#C9474E' },
+    ];
+
+    // ---- waveform ----
+    const waveform = Array.from({ length: 40 }, (_, i) => (20 + Math.round(Math.abs(Math.sin(i * 0.9) * Math.cos(i * 0.4)) * 80)) + '%');
+
+    // ---- filter chips ----
+    const chipActive = "background:#0E1C2B;color:#fff;border:1px solid #0E1C2B;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;";
+    const chipBase = "background:#fff;color:#5A6B7B;border:1px solid #E4DFD4;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;";
+    const filterChips = [
+      { label: 'All leads (8)', active: true }, { label: 'Needs attention (4)' }, { label: 'Booked (3)' },
+      { label: 'Escalated (1)' }, { label: 'Follow-up (1)' }, { label: 'Lost (1)' },
+    ].map((c) => ({ label: c.label, style: c.active ? chipActive : chipBase }));
+
+    return {
+      // nav
+      tabs,
+      goHome: () => this.go('landing'),
+      goDashboard: () => this.go('dashboard'),
+      goLeads: () => this.go('leads'),
+      goReport: () => this.go('report'),
+      goOnboard: () => this.go('onboard'),
+      goAudit: () => this.go('audit'),
+      // view flags
+      showLanding: view === 'landing',
+      showDashboard: view === 'dashboard',
+      showLeads: view === 'leads',
+      showDetail: view === 'detail',
+      showReport: view === 'report',
+      showOnboard: view === 'onboard',
+      showAudit: view === 'audit',
+      // roi
+      avg, recovered, cost,
+      avgFmt: fmt(avg), costFmt: fmt(cost),
+      recoveredRevFmt: fmt(recoveredRev), netFmt: fmt(net),
+      onAvg: (e) => this.setState({ avg: +e.target.value }),
+      onRec: (e) => this.setState({ recovered: +e.target.value }),
+      onCost: (e) => this.setState({ cost: +e.target.value }),
+      // landing
+      withoutSteps, withSteps, howSteps, features, industries, tiers, auditPromise, trust,
+      // app
+      leads, recentLeads, activeLead, metrics, trendBars, reportStats, sources, recommendations,
+      steps, stepDots, activeStep, launchChecklist, auditTests, waveform, filterChips,
+      stepLabel: 'Step ' + step + ' of 7 · ' + activeStep.title,
+      nextLabel: step >= 7 ? 'Launch system →' : 'Continue →',
+      prevStep: () => this.setState({ step: Math.max(1, step - 1) }),
+      nextStep: () => this.setState({ step: Math.min(7, step + 1) }),
+    };
+  }
+}
+</script>
+</body>
+</html>
