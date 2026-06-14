@@ -14,19 +14,24 @@ export function AuditCta() {
   const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
 
+  // GitHub Pages is static — there's no /api server. To capture the lead, set
+  // NEXT_PUBLIC_FORM_ENDPOINT to a free form backend (Formspree, Getform, Basin,
+  // a Google Apps Script, etc.). If it's unset, the form still flows through to
+  // the sample audit; the lead just isn't stored.
+  const formEndpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT;
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("submitting");
     setError(null);
     try {
-      const res = await fetch("/api/audit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ businessName, phone, industry }),
-      });
-      if (!res.ok) {
-        const data = (await res.json().catch(() => null)) as { error?: string } | null;
-        throw new Error(data?.error ?? "Something went wrong. Please try again.");
+      if (formEndpoint) {
+        const res = await fetch(formEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({ businessName, phone, industry }),
+        });
+        if (!res.ok) throw new Error("Something went wrong. Please try again.");
       }
       router.push("/audit/sample");
     } catch (err) {

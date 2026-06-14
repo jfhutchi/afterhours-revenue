@@ -68,4 +68,24 @@ All revenue figures keep an **"estimate, not a guarantee"** disclaimer — requi
 
 ## Deploy
 
-Push to GitHub and import into **Vercel** (auto-detects Next.js, deploys on every push). Add a custom domain in Vercel's settings. Keep API keys in `.env.local` (gitignored) / the host's dashboard — never commit secrets.
+> **You are on the `github-pages` branch** — a static-export variant of `master`. The
+> app, screens, and flow are identical; the only difference is that the audit form has
+> no server to post to (GitHub Pages is static-only). See below. The full-server version
+> (with the live `/api/audit` route) lives on `master` and is meant for Vercel.
+
+### GitHub Pages (this branch)
+
+1. Push this branch to GitHub: `git push -u origin github-pages`.
+2. In the repo: **Settings → Pages → Source: GitHub Actions**.
+3. The included workflow (`.github/workflows/deploy-pages.yml`) builds the static export
+   (`next build` → `out/`) and publishes it. Your site lands at
+   `https://<user>.github.io/<repo>/` (the workflow sets `basePath` from the repo name automatically).
+4. **Audit form:** with no server, the form flows through to the sample audit but doesn't
+   store the lead. To capture leads, create a free form backend (Formspree / Getform / Basin),
+   then add a repo **Variable** named `FORM_ENDPOINT` (Settings → Secrets and variables →
+   Actions → Variables) with its URL. The form will POST there. Everything else is unchanged.
+
+### Vercel (the `master` branch)
+
+Import the repo into **Vercel** (auto-detects Next.js, deploys on every push). This runs the
+full app including the live audit API. Keep secrets in the host's dashboard — never commit them.

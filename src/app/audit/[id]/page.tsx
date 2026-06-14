@@ -4,6 +4,12 @@ import { MonoLabel } from "@/components/ui/MonoLabel";
 import { Disclaimer } from "@/components/ui/Disclaimer";
 import { getAudit } from "@/lib/data/audit";
 
+// Static export: pre-render only the sample audit; any other id 404s.
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return [{ id: "sample" }];
+}
+
 export default async function AuditPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const audit = getAudit(id);
